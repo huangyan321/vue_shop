@@ -4,8 +4,8 @@ import VueRouter from 'vue-router'
 
 const login = () => import("../components/login")
 const home = () => import("../components/home")
-const Welcome = () => import("../components/homeChildCmp/Welcome")
-const Users = () => import("../components/homeChildCmp/Users")
+const Welcome = () => import("../components/user/Welcome")
+const Users = () => import("../components/user/Users")
 Vue.use(VueRouter)
 
 const routes = [{
