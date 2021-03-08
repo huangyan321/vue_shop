@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       login_form: {
-        username: null,
-        password: null,
+        username: "",
+        password: "",
       },
       loginform_rules: {
         username: [
@@ -74,6 +74,7 @@ export default {
       this.$refs.loginformRef.validate(async (valid) => {
         if (!valid) return;
         const { data: res } = await this.$http.post("login", this.login_form);
+
         if (res.meta.status !== 200) {
           this.loginFail();
         } else {
