@@ -15,10 +15,13 @@
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input
-            prefix-icon="iconfont icon-user"
-            v-model="login_form.username"
-          ></el-input>
+         <div class="block">
+              <!-- <span class="demonstration">多选选择任意一级选项</span> -->
+              <el-cascader
+                :options="options"
+                :props="{ multiple: true, checkStrictly: true }"
+                clearable></el-cascader>
+          </div>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password" ref="passwordRef">
@@ -41,20 +44,81 @@
 export default {
   name: "login",
   data() {
+    var validcodeip = (rule, value, callback) => {
+    const reg = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
+    if (reg.test(value)) {
+        callback();
+    } else {
+        return callback(new Error('输入格式不合法！'));
+    }
+};
     return {
+      props: { multiple: true },
+        options: [{
+          value: 1,
+          label: '东南',
+          children: [{
+            value: 2,
+            label: '上海',
+            children: [
+              { value: 3, label: '普陀' },
+              { value: 4, label: '黄埔' },
+              { value: 5, label: '徐汇' }
+            ]
+          }, {
+            value: 7,
+            label: '江苏',
+            children: [
+              { value: 8, label: '南京' },
+              { value: 9, label: '苏州' },
+              { value: 10, label: '无锡' }
+            ]
+          }, {
+            value: 12,
+            label: '浙江',
+            children: [
+              { value: 13, label: '杭州' },
+              { value: 14, label: '宁波' },
+              { value: 15, label: '嘉兴' }
+            ]
+          }]
+        }, {
+          value: 17,
+          label: '西北',
+          children: [{
+            value: 18,
+            label: '陕西',
+            children: [
+              { value: 19, label: '西安' },
+              { value: 20, label: '延安' }
+            ]
+          }, {
+            value: 21,
+            label: '新疆维吾尔族自治区',
+            children: [
+              { value: 22, label: '乌鲁木齐' },
+              { value: 23, label: '克拉玛依' }
+            ]
+          }]
+        }],
       login_form: {
         username: "",
         password: "",
       },
       loginform_rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          {
-            min: 3,
-            max: 10,
-            message: "长度在 3 到 10 个字符",
-            trigger: "blur",
-          },
+          // { required: true, message: "请输入用户名", trigger: "blur" },
+          // {
+          //   min: 3,
+          //   max: 10,
+          //   message: "长度在 3 到 10 个字符",
+          //   trigger: "blur",
+          // },
+         
+            {
+              validator: validcodeip, trigger: 'blur'
+            }
+          
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "change" },
@@ -150,4 +214,5 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+
 </style>
