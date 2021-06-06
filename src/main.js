@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import lodash from 'lodash'
+import nprogress from 'nprogress'
+import 'nprogress/nprogress.css'
+//导入echarts 
+import myecharts from 'echarts'
 //导入element-ui
 import ElementUI from "element-ui"
 import "./assets/css/global.css"
@@ -11,11 +16,18 @@ import './assets/fonts/iconfont.css'
 //导入axios
 import axios from 'axios'
 Vue.prototype.$http = axios
+Vue.prototype.$echarts = myecharts
+Vue.prototype.$_ = lodash
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 axios.interceptors.request.use(config => {
   // console.log(config);
+  nprogress.start();
   config.headers.Authorization = window.sessionStorage.getItem('token')
   return config;
+})
+axios.interceptors.response.use(config => {
+  nprogress.done();
+  return config
 })
 Vue.config.productionTip = false
 Vue.use(ElementUI)

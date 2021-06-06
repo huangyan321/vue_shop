@@ -37,6 +37,10 @@ const routes = [{
       {
         path: "/Roles",
         component: Roles
+      },
+      {
+        path: "/reports",
+        component: ()=>import("../components/report/report")
       }
     ]
   }
