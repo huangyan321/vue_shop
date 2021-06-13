@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- 登录头像区域 -->
       <div class="avator_box">
-        <img src="../assets/logo.png" alt="" />
+        <img src="../assets/cat.png" alt="" />
       </div>
       <!-- 登陆表单区域 -->
       <el-form
@@ -15,11 +15,11 @@
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
-         <el-input
+          <el-input
             prefix-icon="iconfont icon-user"
             v-model="login_form.username"
+            placeholder="请输入用户名"
           ></el-input>
-
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password" ref="passwordRef">
@@ -27,18 +27,26 @@
             type="password"
             prefix-icon="iconfont icon-3702mima"
             v-model="login_form.password"
+            placeholder="请输入密码"
           ></el-input>
         </el-form-item>
         <el-row class="login_btn">
-          <el-button type="primary" @click="login">登录</el-button>
+          <el-button
+            type="primary"
+            @click.native="login"
+            @keyup.enter="enterKey"
+            >登录</el-button
+          >
           <el-button type="info" @click="loginformRetset">重置</el-button>
         </el-row>
       </el-form>
     </div>
+    <p style="float: right; color: #a6a9ad">huangyan321</p>
   </div>
 </template>
 
 <script>
+// import encrypt from "../utils/encrypt";
 export default {
   name: "login",
   data() {
@@ -64,7 +72,18 @@ export default {
       },
     };
   },
+  mounted() {
+    window.addEventListener("keydown", this.keyDown);
+  },
+  destroyed() {
+    window.removeEventListener("keydown", this.keyDown, false);
+  },
   methods: {
+    keyDown(e) {
+      if (e.keyCode == 13) {
+        this.login();
+      }
+    },
     onSubmit() {
       console.log("submit!");
     },
@@ -75,7 +94,12 @@ export default {
     login() {
       this.$refs.loginformRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await this.$http.post("login", this.login_form);
+        let that = this
+        const { data: res } = await this.$http.post("login", {
+          username: that.login_form.username,
+          password: that.login_form.password,
+          // encrypt: true,
+        });
 
         if (res.meta.status !== 200) {
           this.loginFail();
@@ -152,5 +176,4 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
-
 </style>
