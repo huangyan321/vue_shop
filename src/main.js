@@ -18,7 +18,7 @@ import axios from 'axios'
 Vue.prototype.$http = axios
 Vue.prototype.$echarts = myecharts
 Vue.prototype.$_ = lodash
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://121.196.101.73:8888/api/private/v1/'
 axios.interceptors.request.use(config => {
   nprogress.start();
   config.headers.Authorization = window.sessionStorage.getItem('token')
