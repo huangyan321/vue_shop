@@ -20,7 +20,6 @@ Vue.prototype.$echarts = myecharts
 Vue.prototype.$_ = lodash
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 axios.interceptors.request.use(config => {
-  // console.log(config);
   nprogress.start();
   config.headers.Authorization = window.sessionStorage.getItem('token')
   return config;
@@ -31,7 +30,6 @@ axios.interceptors.response.use(config => {
 })
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-
 new Vue({
   router,
   render: h => h(App)
