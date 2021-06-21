@@ -42,6 +42,9 @@
       </el-form>
     </div>
     <p style="float: right; color: #a6a9ad">huangyan321</p>
+    <div id="footer">
+      <a href="http://beian.miit.gov.cn/" target="_blank" style="color:#a6a9ad">闽ICP备2021008516号-1</a>
+    </div>
   </div>
 </template>
 
@@ -131,6 +134,14 @@ export default {
 </script>
 
 <style scoped>
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 0.6rem;
+  
+}
 #login_container {
   background-color: #2b4b6b;
   height: 100%;
