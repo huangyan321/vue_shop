@@ -1,5 +1,5 @@
 module.exports = {
-  outputDir: "../vue_shop_server/dist",
+  outputDir: 'dist',
   devServer: {
   }
 }

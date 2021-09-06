@@ -65,47 +65,47 @@
 
 <script>
 export default {
-  name: "home",
+  name: 'home',
 
-  data() {
+  data () {
     return {
       menuList: [],
       iconList: {
-        125: "iconfont icon-users",
-        103: "iconfont icon-tijikongjian",
-        101: "iconfont icon-shangpin",
-        102: "iconfont icon-danju",
-        145: "iconfont icon-baobiao",
+        125: 'iconfont icon-users',
+        103: 'iconfont icon-tijikongjian',
+        101: 'iconfont icon-shangpin',
+        102: 'iconfont icon-danju',
+        145: 'iconfont icon-baobiao'
       },
       collapseCheck: false,
 
-      activeMenu: null,
-    };
+      activeMenu: null
+    }
   },
-  created() {
-    this.getMenuList();
+  created () {
+    this.getMenuList()
   },
   methods: {
-    backBtn() {
-      window.sessionStorage.clear();
-      this.$router.replace("/login");
+    backBtn () {
+      window.sessionStorage.clear()
+      this.$router.replace('/login')
     },
-    async getMenuList() {
-      const { data: res } = await this.$http.get("menus");
-      if (res.meta.status != 200) return this.$message.error(res.meta.msg);
-      this.menuList = res.data;
+    async getMenuList () {
+      const { data: res } = await this.$http.get('menus')
+      if (res.meta.status != 200) return this.$message.error(res.meta.msg)
+      this.menuList = res.data
     },
-    collepseClick() {
-      this.collapseCheck = !this.collapseCheck;
+    collepseClick () {
+      this.collapseCheck = !this.collapseCheck
     },
     // 用sessionStorage保存当前激活菜单
-    activeMenuClick(state) {
+    activeMenuClick (state) {
       // console.log(state);
-      window.sessionStorage.setItem("activeMenu", state);
-      this.activeMenu = window.sessionStorage.getItem("activeMenu");
-    },
-  },
-};
+      window.sessionStorage.setItem('activeMenu', state)
+      this.activeMenu = window.sessionStorage.getItem('activeMenu')
+    }
+  }
+}
 </script>
 
 <style scoped>

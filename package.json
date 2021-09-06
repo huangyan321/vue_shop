@@ -5,7 +5,9 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build:deploy": "npm run build && gulp deploy",
+    "deploy": "gulp deploy"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -13,6 +15,8 @@
     "crypto-js": "^4.0.0",
     "echarts": "^4.9.0",
     "element-ui": "^2.15.1",
+    "gulp": "^4.0.2",
+    "gulp-ssh": "^0.7.0",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
     "npm": "^7.17.0",

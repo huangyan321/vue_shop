@@ -30,29 +30,29 @@
 
 <script>
 export default {
-  name: "Rights",
-  data() {
+  name: 'Rights',
+  data () {
     return {
-      RightType: "list",
-      RightsList: [],
-    };
+      RightType: 'list',
+      RightsList: []
+    }
   },
-  created() {
-    this.getRightsList();
+  created () {
+    this.getRightsList()
   },
   methods: {
-    async getRightsList() {
-      const { data: res } = await this.$http.get(`rights/${this.RightType}`);
+    async getRightsList () {
+      const { data: res } = await this.$http.get(`rights/${this.RightType}`)
 
       if (res.meta.status != 200) {
-        return this.$message.error("权限列表获取失败!");
+        return this.$message.error('权限列表获取失败!')
       } else {
-        this.RightsList = res.data;
-        this.$message.success("权限列表获取成功!");
+        this.RightsList = res.data
+        this.$message.success('权限列表获取成功!')
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

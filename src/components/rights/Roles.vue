@@ -146,196 +146,196 @@
 
 <script>
 export default {
-  name: "Roles",
-  data() {
+  name: 'Roles',
+  data () {
     return {
       roleList: [],
       addRoleDialogForm: {
-        roleName: "",
-        roleDesc: "",
+        roleName: '',
+        roleDesc: ''
       },
       addRoleDialogRules: {
         roleName: [
-          { required: true, message: "请输入角色名称", trigger: "blur" },
+          { required: true, message: '请输入角色名称', trigger: 'blur' },
           {
             min: 3,
             max: 10,
-            message: "长度在 3 到 10 个字符",
-            trigger: "blur",
-          },
+            message: '长度在 3 到 10 个字符',
+            trigger: 'blur'
+          }
         ],
         roleDesc: [
-          { required: true, message: "请输入角色描述", trigger: "blur" },
+          { required: true, message: '请输入角色描述', trigger: 'blur' },
           {
             min: 3,
             max: 10,
-            message: "长度在 3 到 10 个字符",
-            trigger: "blur",
-          },
-        ],
+            message: '长度在 3 到 10 个字符',
+            trigger: 'blur'
+          }
+        ]
       },
       addRoleDialogVisible: false,
       // 分配权限对话框的隐藏于展示
       showRightDialogVisible: false,
       rightsList: [],
       rightsListProps: {
-        label: "authName",
-        children: "children",
+        label: 'authName',
+        children: 'children'
       },
       defKeys: [],
-      roleId: "",
-    };
+      roleId: ''
+    }
   },
-  created() {
-    this.getRolesList();
+  created () {
+    this.getRolesList()
   },
   methods: {
     // 获取角色数据
-    async getRolesList() {
-      const { data: res } = await this.$http.get("roles");
+    async getRolesList () {
+      const { data: res } = await this.$http.get('roles')
       // console.log(res);
       if (res.meta.status != 200) {
-        return this.$message.error("获取角色列表失败!");
+        return this.$message.error('获取角色列表失败!')
       } else {
-        this.roleList = res.data;
+        this.roleList = res.data
       }
     },
-    addRole() {
-      this.addRoleDialogVisible = true;
+    addRole () {
+      this.addRoleDialogVisible = true
     },
     // 关闭对话框清空内容
-    addRoleDialogClosed() {
-      this.$refs.addRoleDialogFormRef.resetFields();
+    addRoleDialogClosed () {
+      this.$refs.addRoleDialogFormRef.resetFields()
     },
     // 确认添加角色
-    sureAddRole() {
+    sureAddRole () {
       this.$refs.addRoleDialogFormRef.validate(async (valid) => {
         if (!valid) {
-          return;
+          return
         }
         const { data: res } = await this.$http.post(
-          "roles",
+          'roles',
           this.addRoleDialogForm
-        );
+        )
         if (res.meta.status != 201) {
-          return this.$message.error("添加失败!");
+          return this.$message.error('添加失败!')
         } else {
-          this.getRolesList();
-          this.$message.success("添加成功!");
+          this.getRolesList()
+          this.$message.success('添加成功!')
         }
-      });
+      })
     },
     // 删除角色
-    roleDelete(id) {
-      this.$confirm("此操作将永久删除该角色, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+    roleDelete (id) {
+      this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(async () => {
-          const { data: res } = await this.$http.delete(`roles/${id}`);
+          const { data: res } = await this.$http.delete(`roles/${id}`)
           // console.log(res);
           if (res.meta.status != 200) {
             this.$message({
-              type: "error",
-              message: "删除失败!",
-            });
+              type: 'error',
+              message: '删除失败!'
+            })
           } else {
             this.$message({
-              type: "success",
-              message: "删除成功!",
-            });
-            this.getRolesList();
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.getRolesList()
           }
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
-    //删除指定的权限
-    removeRights(role, rightsId) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+    // 删除指定的权限
+    removeRights (role, rightsId) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(async () => {
           const { data: res } = await this.$http.delete(
             `roles/${role.id}/rights/${rightsId}`
-          );
-          console.log(role.id);
+          )
+          console.log(role.id)
           if (res.meta.status != 200) {
             this.$message({
-              type: "error",
-              message: "删除权限失败!",
-            });
+              type: 'error',
+              message: '删除权限失败!'
+            })
           } else {
             this.$message({
-              type: "success",
-              message: "删除权限成功!",
-            });
-            role.children = res.data;
+              type: 'success',
+              message: '删除权限成功!'
+            })
+            role.children = res.data
           }
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
     },
-    //获取权限对话框
-    async ShowRightDialog(role) {
-      const { data: res } = await this.$http.get(`rights/tree`);
+    // 获取权限对话框
+    async ShowRightDialog (role) {
+      const { data: res } = await this.$http.get('rights/tree')
       // console.log(res);
       if (res.meta.status !== 200) {
-        return this.$message.error("获取权限失败!");
+        return this.$message.error('获取权限失败!')
       } else {
-        this.rightsList = res.data;
-        this.roleId = role.id;
+        this.rightsList = res.data
+        this.roleId = role.id
       }
       // 利用递归获取三级权限的id
-      this.getDefKeys(role, this.defKeys);
-      this.showRightDialogVisible = true;
+      this.getDefKeys(role, this.defKeys)
+      this.showRightDialogVisible = true
     },
     // 利用递归获取三级权限的id，并保存到defKeys 数组中
-    getDefKeys(node, arr) {
+    getDefKeys (node, arr) {
       if (!node.children) {
-        return arr.push(node.id);
+        return arr.push(node.id)
       }
       node.children.forEach((item) => {
-        this.getDefKeys(item, arr);
-      });
+        this.getDefKeys(item, arr)
+      })
     },
     // 对话框关闭时时清空defKeys数组
-    ShowRightDialogClosed() {
-      this.defKeys = [];
+    ShowRightDialogClosed () {
+      this.defKeys = []
     },
     // 为角色增加权限
-    async addRightsList() {
+    async addRightsList () {
       const checkId = [
         ...this.$refs.treeRef.getCheckedKeys(),
-        ...this.$refs.treeRef.getHalfCheckedKeys(),
-      ];
-      const str = checkId.join(",");
+        ...this.$refs.treeRef.getHalfCheckedKeys()
+      ]
+      const str = checkId.join(',')
       const { data: res } = await this.$http.post(
         `roles/${this.roleId}/rights`,
         {
-          rids: str,
+          rids: str
         }
-      );
+      )
       if (res.meta.status !== 200) {
-        return this.$message.error("添加权限失败!");
+        return this.$message.error('添加权限失败!')
       } else {
-        this.$message.success("添加权限成功!");
-        this.getRolesList();
+        this.$message.success('添加权限成功!')
+        this.getRolesList()
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -347,6 +347,7 @@ export default {
   border-top: 1px solid #eee;
 }
 .vcenter {
+
   display: flex;
   align-items: center;
 }

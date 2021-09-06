@@ -51,86 +51,86 @@
 <script>
 // import encrypt from "../utils/encrypt";
 export default {
-  name: "login",
-  data() {
+  name: 'login',
+  data () {
     return {
       props: { multiple: true },
       login_form: {
-        username: "",
-        password: "",
+        username: '',
+        password: ''
       },
       loginform_rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+          { required: true, message: '请输入用户名', trigger: 'blur' },
           {
             min: 3,
             max: 10,
-            message: "长度在 3 到 10 个字符",
-            trigger: "blur",
-          },
+            message: '长度在 3 到 10 个字符',
+            trigger: 'blur'
+          }
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "change" },
-        ],
-      },
-    };
+          { required: true, message: '请输入密码', trigger: 'change' }
+        ]
+      }
+    }
   },
-  mounted() {
-    window.addEventListener("keydown", this.keyDown);
+  mounted () {
+    window.addEventListener('keydown', this.keyDown)
   },
-  destroyed() {
-    window.removeEventListener("keydown", this.keyDown, false);
+  destroyed () {
+    window.removeEventListener('keydown', this.keyDown, false)
   },
   methods: {
-    keyDown(e) {
+    keyDown (e) {
       if (e.keyCode == 13) {
-        this.login();
+        this.login()
       }
     },
-    onSubmit() {
-      console.log("submit!");
+    onSubmit () {
+      console.log('submit!')
     },
-    loginformRetset() {
+    loginformRetset () {
       // console.log(this);
-      this.$refs.loginformRef.resetFields();
+      this.$refs.loginformRef.resetFields()
     },
-    login() {
+    login () {
       this.$refs.loginformRef.validate(async (valid) => {
-        if (!valid) return;
-        let that = this
-        const { data: res } = await this.$http.post("login", {
+        if (!valid) return
+        const that = this
+        const { data: res } = await this.$http.post('login', {
           username: that.login_form.username,
-          password: that.login_form.password,
+          password: that.login_form.password
           // encrypt: true,
-        });
+        })
 
         if (res.meta.status !== 200) {
-          this.loginFail();
+          this.loginFail()
         } else {
-          this.loginSuccess();
-          window.sessionStorage.setItem("token", res.data.token);
-          this.$router.push("/home");
+          this.loginSuccess()
+          window.sessionStorage.setItem('token', res.data.token)
+          this.$router.push('/home')
         }
-      });
+      })
     },
-    loginSuccess() {
+    loginSuccess () {
       this.$message({
         showClose: true,
-        message: "登陆成功!",
-        type: "success",
-      });
+        message: '登陆成功!',
+        type: 'success'
+      })
     },
 
-    loginFail() {
+    loginFail () {
       this.$message({
         showClose: true,
-        message: "用户名或密码错误，请重新登录!",
-        type: "error",
-      });
-      this.$refs.passwordRef.resetField();
-    },
-  },
-};
+        message: '用户名或密码错误，请重新登录!',
+        type: 'error'
+      })
+      this.$refs.passwordRef.resetField()
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -140,7 +140,6 @@ export default {
   left: 50%;
   transform: translate(-50%);
   font-size: 0.6rem;
-  
 }
 #login_container {
   background-color: #2b4b6b;
